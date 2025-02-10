@@ -19,8 +19,7 @@ sudo apt install mingw-w64
 ```
 
 ## linux compiling
-(Não testei para todos os casos e estou utilizando Clang)  
-
+Não testei para todos os casos e estou utilizando Clang:  
 ```
 clang --target=x86_64-w64-mingw32 -o main.exe main.cpp
 ```

@@ -36,8 +36,7 @@ int main() {
 
   MSG msg;
   while (GetMessage(&msg, NULL, 0, 0)) {
-    TranslateMessage(&msg);
-    DispatchMessage(&msg);
+    // We don't need to TranslateMessage() and DispatchMessage()
   }
 
   // Remove hook.
