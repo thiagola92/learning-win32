@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <windows.h>
 
-LRESULT CALLBACK KeyboardProcedure(int number_code, WPARAM wParam,
+LRESULT CALLBACK LowLevelKeyboardProcedure(int number_code, WPARAM wParam,
                                    LPARAM lParam) {
   printf("Hook action: %d\n", number_code);
 
@@ -23,7 +23,7 @@ LRESULT CALLBACK KeyboardProcedure(int number_code, WPARAM wParam,
 }
 
 int main() {
-  HHOOK handle_hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProcedure,
+  HHOOK handle_hook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProcedure,
                                        GetModuleHandle(NULL), 0);
 
   if (!handle_hook) {
@@ -32,7 +32,8 @@ int main() {
   }
 
   MSG msg;
-  while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+  while (true) {
+    PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);
     // GetMessage() will block until a message arrive.
     // PeekMessage() is a non-blocking option to check (or consume) message.
   }

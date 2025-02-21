@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <windows.h>
 
-LRESULT CALLBACK KeyboardProcedure(int number_code, WPARAM wParam,
+LRESULT CALLBACK LowLevelKeyboardProcedure(int number_code, WPARAM wParam,
                                    LPARAM lParam) {
   printf("Hook action: %d\n", number_code);
 
@@ -25,8 +25,8 @@ LRESULT CALLBACK KeyboardProcedure(int number_code, WPARAM wParam,
 // We can use the classic "main()" for hooks.
 int main() {
   // Request a hook for keyboard, it return a hook handle linked to our
-  // "KeyboardProcedure()".
-  HHOOK handle_hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProcedure,
+  // "LowLevelKeyboardProcedure()".
+  HHOOK handle_hook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProcedure,
                                        GetModuleHandle(NULL), 0);
 
   if (!handle_hook) {

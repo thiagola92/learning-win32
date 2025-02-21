@@ -27,4 +27,6 @@ clang --target=x86_64-w64-mingw32 -o main.exe main.cpp
 ## references
 - https://learn.microsoft.com/en-us/windows/win32/
 - https://learn.microsoft.com/en-us/windows/win32/learnwin32/your-first-windows-program
+- https://learn.microsoft.com/en-us/windows/win32/winmsg/about-hooks
 - https://learn.microsoft.com/en-us/windows/win32/winmsg/using-hooks
+- https://learn.microsoft.com/en-us/windows/win32/inputdev/about-keyboard-input
