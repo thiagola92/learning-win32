@@ -13,8 +13,11 @@ LRESULT CALLBACK LowLevelKeyboardProcedure(int number_code, WPARAM wParam,
     KBDLLHOOKSTRUCT *keyboard_struct = (KBDLLHOOKSTRUCT *)lParam;
 
     if (wParam == WM_KEYDOWN) {
+      // Funny fact: ALT is a "system key", which Windows processes differently,
+      // so it doesn't trigger WM_KEYDOWN.
       printf("Key pressed: %d\n", keyboard_struct->vkCode);
     } else if (wParam == WM_KEYUP) {
+      // Funny fact: ALT still triggers WM_KEYUP.
       printf("Key release: %d\n", keyboard_struct->vkCode);
     }
   }
