@@ -1,7 +1,7 @@
 # learning-win32
 Os exemplos foram executados no Windows, utilizando Visual Studio (não o VSCode) pois garante que realmente tudo está funcionando.  
 
-Nota: Para caso eu esteja no Linux e apenas queira ter certeza que tudo está compilando, adicionei a compilação no Linux.  
+Nota: Para caso eu esteja no Linux e apenas queria ter certeza que tudo está compilando, adicionei a compilação no Linux.  
 
 ## windows install
 Using Visual Studio installer:
