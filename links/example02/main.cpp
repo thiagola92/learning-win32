@@ -3,25 +3,15 @@
 #include <Windows.h>
 #include <iostream>
 #include <stdio.h>
+#include <strsafe.h>
 #include <winnls.h>
 
 #define SIZE 4096
 
 HRESULT CreateLink() {
-  // Minimum information to create a shortcut.
-  LPCWSTR link_target = L"example.txt";
   LPCSTR link_path = "shortcut.lnk";
-
   HRESULT handle_result; // For COM functions.
   int result;            // For normal functions.
-
-  // Convert relative path to absolute path.
-  TCHAR absolute_path[SIZE];
-  result = GetFullPathNameW(link_target, SIZE, absolute_path, NULL);
-
-  if (result == 0) {
-    return GetLastError();
-  }
 
   // Ensure that link path is in unicode.
   WCHAR unicode_path[MAX_PATH];
@@ -32,7 +22,7 @@ HRESULT CreateLink() {
     return GetLastError();
   }
 
-  // Start to create the shortcut.
+  // Start to loading the shortcut.
   IShellLink *shell_link;     // Interface for Shell Link.
   IPersistFile *persist_file; // Interface for Persist File.
 
@@ -43,8 +33,6 @@ HRESULT CreateLink() {
     return handle_result;
   }
 
-  shell_link->SetPath(absolute_path);
-
   handle_result =
       shell_link->QueryInterface(IID_IPersistFile, (LPVOID *)&persist_file);
 
@@ -53,7 +41,37 @@ HRESULT CreateLink() {
     return handle_result;
   }
 
-  handle_result = persist_file->Save(unicode_path, TRUE);
+  handle_result = persist_file->Load(unicode_path, STGM_READ);
+
+  if (!SUCCEEDED(handle_result)) {
+    persist_file->Release();
+    shell_link->Release();
+    return handle_result;
+  }
+
+  // Attempts to find out the link target (even if it was moved or renamed).
+  handle_result = shell_link->Resolve(NULL, 0);
+
+  if (!SUCCEEDED(handle_result)) {
+    persist_file->Release();
+    shell_link->Release();
+    return handle_result;
+  }
+
+  // Get link target.
+  WCHAR target_path[MAX_PATH];
+  WIN32_FIND_DATA find_data;
+  handle_result = shell_link->GetPath(target_path, MAX_PATH,
+                                      (WIN32_FIND_DATA *)&find_data, 0);
+
+  if (!SUCCEEDED(handle_result)) {
+    persist_file->Release();
+    shell_link->Release();
+    return handle_result;
+  }
+
+  setlocale(LC_ALL, "");
+  printf("%ls\n", target_path);
 
   persist_file->Release();
   shell_link->Release();
