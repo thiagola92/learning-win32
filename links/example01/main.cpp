@@ -7,7 +7,7 @@
 
 #define SIZE 4096
 
-HRESULT CreateLink() {
+HRESULT create_link() {
   // Minimum information to create a shortcut.
   const wchar_t *link_target = L"example.txt";
   const char *link_path = "shortcut.lnk";
@@ -65,10 +65,9 @@ int main() {
   HRESULT handle_result = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
 
   if (SUCCEEDED(handle_result)) {
-    handle_result = CreateLink();
+    handle_result = create_link();
+    CoUninitialize();
   }
-
-  CoUninitialize();
 
   return handle_result;
 }

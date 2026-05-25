@@ -8,7 +8,7 @@
 
 #define SIZE 4096
 
-HRESULT CreateLink() {
+HRESULT read_link() {
   const char *link_path = "shortcut.lnk";
   HRESULT handle_result; // For COM functions.
   int result;            // For normal functions.
@@ -83,10 +83,9 @@ int main() {
   HRESULT handle_result = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
 
   if (SUCCEEDED(handle_result)) {
-    handle_result = CreateLink();
+    handle_result = read_link();
+    CoUninitialize();
   }
-
-  CoUninitialize();
 
   return handle_result;
 }

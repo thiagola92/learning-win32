@@ -20,10 +20,10 @@ int main() {
 
   if (SUCCEEDED(handle_result)) {
     printf("COM library initialized.");
-  }
 
-  // Always uninitialize it.
-  CoUninitialize();
+    // Always uninitialize it.
+    CoUninitialize();
+  }
 
   return handle_result;
 }
