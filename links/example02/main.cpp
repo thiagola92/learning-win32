@@ -9,12 +9,12 @@
 #define SIZE 4096
 
 HRESULT CreateLink() {
-  LPCSTR link_path = "shortcut.lnk";
+  const char *link_path = "shortcut.lnk";
   HRESULT handle_result; // For COM functions.
   int result;            // For normal functions.
 
   // Ensure that link path is in unicode.
-  WCHAR unicode_path[MAX_PATH];
+  wchar_t unicode_path[MAX_PATH];
   result =
       MultiByteToWideChar(CP_ACP, 0, link_path, -1, unicode_path, MAX_PATH);
 
@@ -59,7 +59,7 @@ HRESULT CreateLink() {
   }
 
   // Get link target.
-  WCHAR target_path[MAX_PATH];
+  wchar_t target_path[MAX_PATH];
   WIN32_FIND_DATA find_data;
   handle_result = shell_link->GetPath(target_path, MAX_PATH,
                                       (WIN32_FIND_DATA *)&find_data, 0);

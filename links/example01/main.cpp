@@ -9,14 +9,14 @@
 
 HRESULT CreateLink() {
   // Minimum information to create a shortcut.
-  LPCWSTR link_target = L"example.txt";
-  LPCSTR link_path = "shortcut.lnk";
+  const wchar_t *link_target = L"example.txt";
+  const char *link_path = "shortcut.lnk";
 
   HRESULT handle_result; // For COM functions.
   int result;            // For normal functions.
 
   // Convert relative path to absolute path.
-  TCHAR absolute_path[SIZE];
+  wchar_t absolute_path[SIZE];
   result = GetFullPathNameW(link_target, SIZE, absolute_path, NULL);
 
   if (result == 0) {
@@ -24,7 +24,7 @@ HRESULT CreateLink() {
   }
 
   // Ensure that link path is in unicode.
-  WCHAR unicode_path[MAX_PATH];
+  wchar_t unicode_path[MAX_PATH];
   result =
       MultiByteToWideChar(CP_ACP, 0, link_path, -1, unicode_path, MAX_PATH);
 
